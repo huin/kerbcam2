@@ -153,3 +153,5 @@ Examples of reference frames:
  * ignoring rotation
  * reference position relative to object's position, plus some multiple of the
    object's velocity vector relative to the SOI (rotating/non-rotating SOI).
+   Questions remain open as to when the position and velocity are sampled. The
+   intent is to help with fly-by effects, but some clarity is needed here.
