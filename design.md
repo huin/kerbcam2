@@ -37,6 +37,7 @@ Examples of operations:
 * Interpolate camera zoom (field-of-view).
 * Interpolate camera position.
 * Interpolate camera look-at point.
+* Control time speed.
 * Invoke an action on a part (e.g activate an engine).
 * (Maybe) Force GC cycle for perfectionists - maybe this point in the sequence
   isn't too (subjectively) sensitive to GC pauses, but a part that *is*
