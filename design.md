@@ -82,9 +82,16 @@ Mockups made using [ASCIIFlow](http://asciiflow.com/).
 Open questions:
 * How should things be grouped into windows? For example, might the "main
   window" be arranged into 3 sections:
-  * Playback controls (might just be a simple "Play" toggle).
-  * Story overview
+  * Playback controls.
+  * Story overview.
   * Item properties (for editing an item selected in the story overview).
+
+### Playback controls
+
+* Simple "Play" toggle.
+* Auto-play setting that causes playback (i.e time "zero" on a timeline) to
+  begin at a given UT (game universe time). This UT time setting maybe should
+  be part of the data for the story.
 
 ### Story overview
 
