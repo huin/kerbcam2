@@ -1,0 +1,3 @@
+[submodule "kerbcam2/submodules/KSPPluginFramework"]
+	path = kerbcam2/submodules/KSPPluginFramework
+	url = https://github.com/TriggerAu/KSPPluginFramework.git
