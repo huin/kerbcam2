@@ -42,7 +42,7 @@ Examples of operations:
 * (Maybe) Force GC cycle for perfectionists - maybe this point in the sequence
   isn't too (subjectively) sensitive to GC pauses, but a part that *is*
   sensitive is coming up.
-* (Maybe) Set camera visible layers.
+* (Maybe) Set camera visible layers. (This should allow for a IVA view)
 
 Operations *might* have sub-operations in future, but that's just a
 speculative feature idea for now.
