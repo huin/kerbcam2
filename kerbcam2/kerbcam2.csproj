@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -59,6 +60,33 @@
     <Compile Include="Timeline.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem Set the Variables we need
+echo Finding KSP
+if exist "C:\Games\KSP-Dev\KSP.exe" (
+	set GAMEPATH="C:\Games\KSP-Dev"
+) else (
+	echo "Cant find KSP"
+	exit 1
+)
+
+echo Gamepath: "%25GAMEPATH%25"
+set DestPath="%25GAMEPATH%25\GameData\KerbCam2"
+set Binary="%25GAMEPATH%25\KSP.exe"
+
+if not $(ConfigurationName)==Debug goto END
+:DEBUGCONFIG
+rem Copy DLL and run KSP
+mkdir "%25DestPath%25" "%25DestPath%25\Resources"
+copy "$(TargetPath)" "%25DestPath%25"
+copy "$(ProjectDir)\KerbCam2\Resources\*.png" "%25DestPath%25\Resources"
+
+rem and then run the game
+cd "%25GAMEPATH%25"
+START "" /B "%25Binary%25"
+
+:END</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
