@@ -21,12 +21,6 @@ namespace kerbcam2 {
         TimeKey GetEndTime();
 
         /// <summary>
-        /// Is this operation an instantaneous operation?
-        /// </summary>
-        /// <returns>true if the operation is instantaneous.</returns>
-        bool IsInstantaneous();
-
-        /// <summary>
         /// The timeline that the operation uses for its TimeKeys.
         /// </summary>
         /// <returns>The related Timeline.</returns>
