@@ -2,7 +2,7 @@
 
 ### Story
 
-Top-level container object for a timeline, its tracks, and operations.
+Top-level container object for a timeline and operations.
 
 ### Timeline
 
@@ -15,17 +15,6 @@ points in time *may* be named.
 
 A point in time (within a timeline) that may be referenced by operations. It
 may or may not be named for convenience.
-
-### Track
-
-Not a functionally required concept, but potentially useful for the user to
-organise operations into groups within a timeline purely to serve a
-user-interface need to present and organise a sequence of operations clearly. A
-constraint being that operations that overlap in time cannot exist within the
-same track. An operation exists in exactly one track (maybe zero tracks in a
-transitional state if there are copy/paste mechanics).
-
-A track may or may not be named for convenience.
 
 ### Operation
 
@@ -68,16 +57,7 @@ that the actuator can:
 
 Actuators should exist to support for the various types of operation that
 exist.
-
-## Misc thoughts
-
-Time.captureFramerate - potentially useful to set a framerate if we're going
-to capture at a given rate, might make the framerate more predictable.
-
-Create lights to move around a scene as an operation.
-
-## User Interface
-
+## Misc thoughts Time.captureFramerate - potentially useful to set a framerate if we're going to capture at a given rate, might make the framerate more predictable.  Create lights to move around a scene as an operation.  ## User Interface 
 Mockups made using [ASCIIFlow](http://asciiflow.com/).
 
 Open questions:
@@ -100,42 +80,50 @@ This mockup shows how the timeline UI might look with a reasonably simple
 story.
 
 
-              +-------+-------+-------+---------------+--------+--------+
-              | 0.00" | 3.15" | 7.50" | 10.23"        | 12.73" | 20.28" |
-              | Start |       |       | Engines start |        |        |
-    +-----------------+---------------+---------------+--------+--------+
-    |         |               |                                         |
-    | Track 1 | Camera pos... | Camera position                         |
-    |         |               |                                         |
-    +-------------------------------------------------------------------+
-    |         |               |                                         |
-    | Track 2 | Look at po... | Look at position                        |
-    |         |               |                                         |
-    +-------------------------+-------+---------------+-----------------+
-    |         |                       |               |
-    | Track 3 |                       | Invoke        |
-    |         |                       |               |
-    +---------+                       +---------------+
+    +-------+-------+-------+---------------+--------+--------+
+    | 0.00" | 3.15" | 7.50" | 10.23"        | 12.73" | 20.28" |
+    | Start |       |       | Engines start |        |        |
+    +-------+---------------+---------------+--------+--------+
+    |               |
+    | Camera pos... |
+    |               |
+    +---------------+
+    |               |
+    | Look at po... |
+    |               |
+    +---------------------------------------------------------+
+                    |                                         |
+                    | Camera position                         |
+                    |                                         |
+                    +-----------------------------------------+
+                    |                                         |
+                    | Look at position                        |
+                    |                                         |
+                    +-------+---------------+-----------------+
+                            |               |
+                            | Invoke        |
+                            |               |
+                            +---------------+
+
 
 Discussion of each component in this mockup:
 * The top row is the timeline, containing the time keys. A couple of them are
   named, but they all exist at specific times, and are kept in order of
   increasing time from left to right.
-* Each row below that is a track, in this example they just have default names.
-* Each track row contains operations. In this example:
- * "Track 1" contains operations that move the camera, the first operation is a
-   movement of the camera position starting at 0.00", and finishing at 7.50".
-   Immediately following that, the camera starts from a new position at 7.50",
-   and continues moving until 20.28".
- * "Track 2" is similar to "Track 1" but contains camera "look-at" operations
-   instead of camera positioning.
- * "Track 3" contains a single operation at 10.23". This operation (like the
-   others) has a default name. It has been configured to invoke the "activate"
-   action on some rocket engines on a vessel.
+* Each row below that is for an operation. In this example:
+ * The first operation moves the camera - a movement of the camera position
+   starting at 0.00", and finishing at 7.50".
+ * The second operation controls the camera's "look-at", again running from
+   0.00" to 7.50".
+ * Immediately following 7.50", the camera starts from a new position with the
+   third operation starting at 7.50", and continues moving until 20.28", as
+   does the look-at positioning as the fourth operation.
+ * The fifth operation is at 10.23". This operation (like the others) has a
+   default name. It has been configured to invoke the "activate" action on some
+   rocket engines on a vessel.
 
 UI decisions made by this mockup (not necessarily set in stone):
-* Things can optionally be named (specifically "time keys", "tracks" and
-  "operations").
+* Things can optionally be named (specifically "time keys", "operations").
 * The column widths are determined by the time key names, but not by the
   operation names. Not clear if this is a good idea or not, or if it's
   practical within Unity3d.
