@@ -7,12 +7,9 @@ namespace kerbcam2 {
     class BaseException : Exception {
     }
 
-    class NotOwnerException : BaseException {
-    }
-
     class TimeConflictException : BaseException {
     }
 
-    class TimelineMismatchException : BaseException {
+    class TimeValueException : BaseException {
     }
 }

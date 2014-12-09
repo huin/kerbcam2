@@ -26,19 +26,28 @@ namespace kerbcam2 {
         /// <returns>The related Timeline.</returns>
         Timeline GetTimeline();
 
-        // TODO: Method(s) relating to having an effect on the world.
-        // The methods within "Mutate world" cause the operation to act upon
-        // the world.
-        #region Mutate world
         /// <summary>
-        /// Tells the operation to precompute anything it needs to prior to
-        /// playback.
+        /// Create an object for playing back the operation.
         /// </summary>
-        void PrepareForUpdates();
+        /// <param name="actuators">The actuators to use during
+        /// playback.</param>
+        /// <returns>An object that applies the operation to the
+        /// world.</returns>
+        IOperationPlayback MakePlayback(Actuators actuators);
+    }
 
-        void UpdateFor(Actuators actuators, float time);
-        // Things that interpolate across multiple time keys will need to track
-        // which relevant time keys they are between.
-        #endregion
+    /// <summary>
+    /// Alters the world according to its parent operation.
+    /// </summary>
+    interface IOperationPlayback {
+        /// <summary>
+        /// Update the world for the new time.
+        /// </summary>
+        /// <param name="time">Seconds since timeline time zero. Values passed
+        /// to this must monotonically increase between subsequent
+        /// calls. time must be >= zero.</param>
+        /// <exception cref="TimeValueException">A bad value for time was
+        /// given.</exception>
+        void UpdateFor(float time);
     }
 }
