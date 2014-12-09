@@ -37,7 +37,7 @@ namespace kerbcam2 {
     }
 
     /// <summary>
-    /// Alters the world according to its parent operation.
+    /// Applies the effects for playback.
     /// </summary>
     interface IPlaybackState {
         /// <summary>
