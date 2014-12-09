@@ -6,11 +6,11 @@ namespace kerbcam2 {
     /// </summary>
     class Story {
         private Timeline timeline;
-        private List<Track> tracks;
+        private List<IOperation> operations;
 
         public Story() {
             this.timeline = new Timeline();
-            this.tracks = new List<Track>();
+            this.operations = new List<IOperation>();
         }
     }
 }
