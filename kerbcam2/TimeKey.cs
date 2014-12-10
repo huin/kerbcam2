@@ -26,7 +26,7 @@ namespace kerbcam2 {
         }
 
         public string GetTimeFormatted() {
-            return string.Format("{0:0.00}", seconds);
+            return string.Format("{0:0.00}\"", seconds);
         }
     }
 }

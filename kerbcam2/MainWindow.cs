@@ -7,6 +7,9 @@ namespace kerbcam2 {
         private SimpleStockToolbarButton launcherButton;
         private WindowResizer resizer;
 
+        private Story story;
+        private StoryEditor storyEditor;
+
         #region Lifetime
         internal override void Awake() {
             resizer = new WindowResizer(
@@ -17,6 +20,8 @@ namespace kerbcam2 {
                 delegate() { Visible = false; },
                 ApplicationLauncher.AppScenes.FLIGHT,
                 "icon-36x36.png");
+
+            NewStory();
 
             // MonoBehaviourWindow settings.
             Visible = false;
@@ -38,10 +43,24 @@ namespace kerbcam2 {
         }
         #endregion
 
+        private void NewStory() {
+            story = new Story();
+            storyEditor = new StoryEditor(story);
+            // TODO: Remove these time keys, at least from MainWindow.
+            story.Timeline.NewTimeKey(new TimeKey("Start", 0f));
+            story.Timeline.NewTimeKey(new TimeKey("", 3.15f));
+            story.Timeline.NewTimeKey(new TimeKey("", 7.5f));
+            story.Timeline.NewTimeKey(new TimeKey("Engines start", 10.23f));
+            story.Timeline.NewTimeKey(new TimeKey("", 12.73f));
+            story.Timeline.NewTimeKey(new TimeKey("", 20.28f));
+        }
+
         internal override void DrawWindow(int id) {
             using (GU.Vertical()) {
-                // TODO: Main GUI stuff here. This spacer is a placeholder.
-                GUILayout.FlexibleSpace();
+                // TODO: GUI components other than story editor.
+                if (storyEditor != null) {
+                    storyEditor.DrawUI();
+                }
 
                 // Bottom row for window controls.
                 using (GU.Horizontal()) {

@@ -12,5 +12,13 @@ namespace kerbcam2 {
             this.timeline = new Timeline();
             this.operations = new List<IOperation>();
         }
+
+        public Timeline Timeline {
+            get { return timeline; }
+        }
+
+        public IEnumerator<IOperation> EnumerateOperations() {
+            return operations.GetEnumerator();
+        }
     }
 }

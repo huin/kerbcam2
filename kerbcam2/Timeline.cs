@@ -22,6 +22,28 @@ namespace kerbcam2 {
             });
         }
 
+        public TimeKeyEnumerator GetEnumerator() {
+            return new TimeKeyEnumerator(this);
+        }
+
+        public struct TimeKeyEnumerator : IEnumerator<TimeKey> {
+            Timeline timeline;
+            IEnumerator<long> orderEnum;
+            internal TimeKeyEnumerator(Timeline timeline) {
+                this.timeline = timeline;
+                orderEnum = timeline.keyOrder.GetEnumerator();
+            }
+            object System.Collections.IEnumerator.Current {
+                get { return Current; }
+            }
+            public TimeKey Current {
+                get { return timeline.keys[orderEnum.Current]; }
+            }
+            public void Dispose() { orderEnum.Dispose(); }
+            public bool MoveNext() { return orderEnum.MoveNext(); }
+            public void Reset() { orderEnum.Reset(); }
+        }
+
         /// <summary>
         /// Adds a copy of a TimeKey to the timeline.
         /// </summary>
