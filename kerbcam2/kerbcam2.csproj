@@ -80,7 +80,7 @@ if not $(ConfigurationName)==Debug goto END
 rem Copy DLL and run KSP
 mkdir "%25DestPath%25" "%25DestPath%25\Resources"
 copy "$(TargetPath)" "%25DestPath%25"
-copy "$(ProjectDir)\KerbCam2\Resources\*.png" "%25DestPath%25\Resources"
+copy "$(ProjectDir)\Resources\*.png" "%25DestPath%25\Resources"
 
 rem and then run the game
 cd "%25GAMEPATH%25"
