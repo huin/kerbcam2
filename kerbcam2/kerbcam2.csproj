@@ -52,6 +52,7 @@
     <Compile Include="MainWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Story.cs" />
+    <Compile Include="StoryEditor.cs" />
     <Compile Include="submodules\KSPPluginFramework\KSPPluginFramework\ConfigNodeStorage.cs" />
     <Compile Include="submodules\KSPPluginFramework\KSPPluginFramework\ExtensionsUnity.cs" />
     <Compile Include="submodules\KSPPluginFramework\KSPPluginFramework\MonoBehaviourExtended.cs" />
@@ -73,20 +74,12 @@ if exist "C:\Games\KSP-Dev\KSP.exe" (
 
 echo Gamepath: "%25GAMEPATH%25"
 set DestPath="%25GAMEPATH%25\GameData\KerbCam2"
-set Binary="%25GAMEPATH%25\KSP.exe"
 
-if not $(ConfigurationName)==Debug goto END
-:DEBUGCONFIG
-rem Copy DLL and run KSP
+rem Copy DLL and Resources
 mkdir "%25DestPath%25" "%25DestPath%25\Resources"
 copy "$(TargetPath)" "%25DestPath%25"
 copy "$(ProjectDir)\Resources\*.png" "%25DestPath%25\Resources"
-
-rem and then run the game
-cd "%25GAMEPATH%25"
-START "" /B "%25Binary%25"
-
-:END</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
