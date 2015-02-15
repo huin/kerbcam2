@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Actuators.cs" />
     <Compile Include="Debug_AutoLoadPersistentSaveOnStartup.cs" />
+    <Compile Include="DummyOperation.cs" />
+    <Compile Include="EnumerableWrapper.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="IOperation.cs" />

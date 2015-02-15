@@ -48,14 +48,14 @@ namespace kerbcam2 {
         /// Adds a copy of a TimeKey to the timeline.
         /// </summary>
         /// <param name="key">The value of the key to add. Its ID is ignored.</param>
-        /// <returns>The ID of the added key.</returns>
-        public long NewTimeKey(TimeKey key) {
+        /// <returns>The added key.</returns>
+        public TimeKey NewTimeKey(TimeKey key) {
             key.id = nextId;
             nextId++;
             keys[key.id] = key;
             keyOrder.Add(key.id);
             ResortKeyOrder();
-            return key.id;
+            return key;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace kerbcam2 {
     /// <summary>
     /// Handles modification of the world (or camera) during a given time range.
@@ -11,7 +12,7 @@ namespace kerbcam2 {
         /// Returns the earliest TimeKey for the operation.
         /// </summary>
         /// <returns>Earliest TimeKey for the operation.</returns>
-        TimeKey GetStartTime();
+        TimeKey GetBeginTime();
 
         /// <summary>
         /// Returns the latest TimeKey for the operation. This is equal to the
@@ -25,6 +26,12 @@ namespace kerbcam2 {
         /// </summary>
         /// <returns>The related Timeline.</returns>
         Timeline GetTimeline();
+
+        /// <summary>
+        /// Enumerates the timekeys within the operation.
+        /// </summary>
+        /// <returns>An enumerable over the timekeys.</returns>
+        EnumerableWrapper<TimeKey> EnumerateTimes();
 
         /// <summary>
         /// Create an object for playing back the operation.

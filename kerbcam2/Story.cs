@@ -17,8 +17,16 @@ namespace kerbcam2 {
             get { return timeline; }
         }
 
-        public IEnumerator<IOperation> EnumerateOperations() {
-            return operations.GetEnumerator();
+        public EnumerableWrapper<IOperation> EnumerateOperations() {
+            return new EnumerableWrapper<IOperation>(operations);
+        }
+
+        public void AddOperation(IOperation op) {
+            operations.Add(op);
+        }
+
+        public void RemoveOperationByIndex(int index) {
+            operations.RemoveAt(index);
         }
     }
 }
