@@ -22,6 +22,14 @@ namespace kerbcam2 {
             });
         }
 
+        public TimeKey this[int index] {
+            get { return keys[keyOrder[index]]; }
+        }
+
+        public int Count {
+            get { return keys.Count; }
+        }
+
         public TimeKeyEnumerator GetEnumerator() {
             return new TimeKeyEnumerator(this);
         }
@@ -90,6 +98,14 @@ namespace kerbcam2 {
             }
             keys[key.id] = key;
             ResortKeyOrder();
+        }
+
+        public void ShiftAll(float offset) {
+            foreach (long tid in keyOrder) {
+                TimeKey t = keys[tid];
+                t.seconds += offset;
+                keys[tid] = t;
+            }
         }
 
         /// <summary>
