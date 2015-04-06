@@ -14,12 +14,12 @@ namespace kerbcam2 {
         string Name { get; }
 
         /// <summary>
-        /// Return description for the time key ID, if it exists.
+        /// Return the operation key for the given timekey ID.
         /// </summary>
-        /// <param name="id">The timekey ID.</param>
-        /// <param name="name">Returns the description.</param>
+        /// <param name="tid">The timekey ID.</param>
+        /// <param name="name">Returns the operation key.</param>
         /// <returns>true if the operation has the time key, false otherwise.</returns>
-        bool GetNameForTimeKey(long id, out string name);
+        bool TryGetKey(long tid, out IOperationKey key);
 
         /// <summary>
         /// Create an object for playing back the operation.
@@ -29,6 +29,14 @@ namespace kerbcam2 {
         /// <returns>An object that applies the operation to the
         /// world.</returns>
         IPlaybackState MakePlayback(Actuators actuators);
+
+        IItemEditor MakeEditor();
+    }
+
+    interface IOperationKey {
+        IItemEditor MakeEditor();
+
+        string Name { get; }
     }
 
     /// <summary>

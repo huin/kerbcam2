@@ -159,6 +159,8 @@ namespace kerbcam2 {
         public static GUIStyle windowButton;
         public static GUIStyle marginlessButton;
         public static GUIStyle marginlessLabel;
+        public static GUIStyle invalidTextField;
+        public static GUIStyle invalidValueLabel;
 
         private static void updateStyles() {
             var activeTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.3f));
@@ -185,6 +187,14 @@ namespace kerbcam2 {
 
             marginlessLabel = new GUIStyle(skin.label);
             marginlessLabel.margin = new RectOffset(0, 0, 0, 0);
+
+            invalidTextField = new GUIStyle(skin.textField);
+            invalidTextField.active.textColor = Color.red;
+            invalidTextField.focused.textColor = Color.red;
+            invalidTextField.normal.textColor = Color.red;
+
+            invalidValueLabel = new GUIStyle(skin.label);
+            invalidValueLabel.normal.textColor = Color.red;
         }
 
         private static Texture2D MakeConstantTexture(Color fill) {

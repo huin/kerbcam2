@@ -56,9 +56,9 @@ namespace kerbcam2 {
 
             var dummyOp = new DummyOperation(story.Timeline, "test");
             story.AddOperation(dummyOp);
-            dummyOp.Items.Add(tk0, "p0");
-            dummyOp.Items.Add(tk1, "p1");
-            dummyOp.Items.Add(tk3, "p3");
+            dummyOp.AddKey(tk0, "p0");
+            dummyOp.AddKey(tk1, "p1");
+            dummyOp.AddKey(tk3, "p3");
         }
 
         internal override void DrawWindow(int id) {

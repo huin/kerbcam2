@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace kerbcam2 {
     class Timeline {
@@ -22,14 +23,26 @@ namespace kerbcam2 {
             });
         }
 
+        /// <summary>
+        /// Access TimeKey by ordered index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public TimeKey this[int index] {
             get { return keys[keyOrder[index]]; }
         }
 
+        /// <summary>
+        /// Returns number of TimeKeys.
+        /// </summary>
         public int Count {
             get { return keys.Count; }
         }
 
+        /// <summary>
+        /// Iterates over the TimeKeys in order.
+        /// </summary>
+        /// <returns></returns>
         public TimeKeyEnumerator GetEnumerator() {
             return new TimeKeyEnumerator(this);
         }
@@ -90,7 +103,11 @@ namespace kerbcam2 {
         /// same time.</exception>
         public void UpdateTimeKey(TimeKey key) {
             // Cause exception to be raised if doesn't exist.
-            TimeKey unused = keys[key.id];
+            TimeKey current = keys[key.id];
+            if (current.seconds == key.seconds) {
+                // No-op shortcut.
+                return;
+            }
             foreach (TimeKey other in keys.Values) {
                 if (other.id != key.id && other.seconds == key.seconds) {
                     throw new TimeConflictException();
@@ -109,14 +126,60 @@ namespace kerbcam2 {
         }
 
         /// <summary>
+        /// Returns an editor for the identified TimeKey.
+        /// </summary>
+        /// <param name="tid">ID of the TimeKey.</param>
+        /// <returns></returns>
+        /// <exception cref="KeyNotFoundException">No TimeKey with the given ID exists.</exception>
+        public IItemEditor GetEditorForTimeKey(long tid) {
+            return new TimeKeyEditor(this, keys[tid]);
+        }
+
+        /// <summary>
         /// Returns a copy of the TimeKey with the given ID.
         /// </summary>
         /// <param name="id">The ID of the TimeKey to return.</param>
         /// <returns>Copy of the TimeKey.</returns>
-        /// <exception cref="KeyNotFoundException">No TimeKey with the given
-        /// ID exists.</exception>
+        /// <exception cref="KeyNotFoundException">No TimeKey with the given ID exists.</exception>
         public TimeKey GetTimeKey(long id) {
             return keys[id];
+        }
+
+        private class TimeKeyEditor : IItemEditor {
+            private Timeline timeline;
+            private TimeKey key;
+            private NumericField<float> secondsField;
+
+            public TimeKeyEditor(Timeline timeline, TimeKey key) {
+                this.timeline = timeline;
+                this.key = key;
+                secondsField = new NumericField<float>(key.seconds,
+                    delegate(string s, out float v) {
+                        if (float.TryParse(s, out v)) {
+                            if (v < 0) {
+                                return false;
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+            }
+
+            public bool DrawUI() {
+                timeline.GetTimeKey(key.id);
+                using (GU.Vertical()) {
+                    using (GU.Horizontal()) {
+                        GUILayout.Label("Name: ");
+                        key.name = GUILayout.TextField(key.name);
+                    }
+                    using (GU.Horizontal()) {
+                        GUILayout.Label("Seconds: ");
+                        key.seconds = secondsField.DrawUI(key.seconds);
+                    }
+                }
+                timeline.UpdateTimeKey(key);
+                return false;
+            }
         }
     }
 }
