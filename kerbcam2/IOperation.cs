@@ -33,6 +33,8 @@ namespace kerbcam2 {
         /// <returns>An enumerable over the timekeys.</returns>
         EnumerableWrapper<TimeKey> EnumerateTimes();
 
+        bool HasTime(TimeKey time);
+
         /// <summary>
         /// Create an object for playing back the operation.
         /// </summary>

@@ -30,6 +30,10 @@ namespace kerbcam2 {
             return new EnumerableWrapper<TimeKey>(items);
         }
 
+        public bool HasTime(TimeKey time) {
+            return items.Contains(time);
+        }
+
         public IPlaybackState MakePlayback(Actuators actuators) {
             throw new NotImplementedException();
         }
