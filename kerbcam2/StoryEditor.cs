@@ -4,44 +4,36 @@ using System.Collections.Generic;
 namespace kerbcam2 {
     class StoryEditor {
         private Story story;
-        private Dictionary<long, float> headers;
 
         public StoryEditor(Story story) {
             this.story = story;
-            this.headers = new Dictionary<long, float>();
         }
 
         public void DrawUI() {
-            bool repaint = Event.current.type == EventType.Repaint;
-            if (repaint) {
-                headers.Clear();
-            }
             // Render the table.
             using (GU.Vertical()) {
                 // Column headers.
                 using (GU.Horizontal()) {
+                    GUILayout.Label("Operation", Styles.marginlessLabel,
+                            GUILayout.Height(40), GUILayout.Width(70));
                     foreach (TimeKey time in story.Timeline) {
                         string timekeyLabel = string.Format("{0}\n{1}",
                                 time.GetTimeFormatted(),
                                 time.name);
                         GUILayout.Button(timekeyLabel, Styles.marginlessButton,
                             GUILayout.Height(40), GUILayout.Width(60));
-                        if (repaint) {
-                            headers.Add(time.id, GUILayoutUtility.GetLastRect().width);
-                        }
                     }
                 }
                 // Example rows.
                 foreach (IOperation op in story.EnumerateOperations()) {
                     using (GU.Horizontal()) {
+                        GUILayout.Button(op.Name, Styles.marginlessButton, GUILayout.Width(70));
                         foreach (TimeKey time in story.Timeline) {
-                            float width;
-                            headers.TryGetValue(time.id, out width);
                             string description;
                             if (op.GetNameForTimeKey(time.id, out description)) {
-                                GUILayout.Button(description, Styles.marginlessButton, GUILayout.Width(width));
+                                GUILayout.Button(description, Styles.marginlessButton, GUILayout.Width(60));
                             } else {
-                                GUILayout.Space(width);
+                                GUILayout.Space(60);
                             }
                         }
                     }

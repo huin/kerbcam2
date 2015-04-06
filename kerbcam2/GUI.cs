@@ -158,6 +158,7 @@ namespace kerbcam2 {
         private const int winButtonSize = 25;
         public static GUIStyle windowButton;
         public static GUIStyle marginlessButton;
+        public static GUIStyle marginlessLabel;
 
         private static void updateStyles() {
             var activeTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.3f));
@@ -181,6 +182,9 @@ namespace kerbcam2 {
 
             marginlessButton = new GUIStyle(skin.button);
             marginlessButton.margin = new RectOffset(0, 0, 0, 0);
+
+            marginlessLabel = new GUIStyle(skin.label);
+            marginlessLabel.margin = new RectOffset(0, 0, 0, 0);
         }
 
         private static Texture2D MakeConstantTexture(Color fill) {
