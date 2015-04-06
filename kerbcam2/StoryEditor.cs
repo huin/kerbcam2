@@ -36,8 +36,9 @@ namespace kerbcam2 {
                         foreach (TimeKey time in story.Timeline) {
                             float width;
                             headers.TryGetValue(time.id, out width);
-                            if (op.HasTime(time)) {
-                                GUILayout.Button("...", Styles.marginlessButton, GUILayout.Width(width));
+                            string description;
+                            if (op.GetTimeKeyDescription(time.id, out description)) {
+                                GUILayout.Button(description, Styles.marginlessButton, GUILayout.Width(width));
                             } else {
                                 GUILayout.Space(width);
                             }

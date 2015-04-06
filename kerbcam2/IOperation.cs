@@ -9,31 +9,12 @@ namespace kerbcam2 {
     /// </summary>
     interface IOperation {
         /// <summary>
-        /// Returns the earliest TimeKey for the operation.
+        /// Return description for the time key ID, if it exists.
         /// </summary>
-        /// <returns>Earliest TimeKey for the operation.</returns>
-        TimeKey GetBeginTime();
-
-        /// <summary>
-        /// Returns the latest TimeKey for the operation. This is equal to the
-        /// start time when the operation is instantaneous.
-        /// </summary>
-        /// <returns>Earliest TimeKey for the operation.</returns>
-        TimeKey GetEndTime();
-
-        /// <summary>
-        /// The timeline that the operation uses for its TimeKeys.
-        /// </summary>
-        /// <returns>The related Timeline.</returns>
-        Timeline GetTimeline();
-
-        /// <summary>
-        /// Enumerates the timekeys within the operation.
-        /// </summary>
-        /// <returns>An enumerable over the timekeys.</returns>
-        EnumerableWrapper<TimeKey> EnumerateTimes();
-
-        bool HasTime(TimeKey time);
+        /// <param name="id">The timekey ID.</param>
+        /// <param name="description">Returns the description.</param>
+        /// <returns>true if the operation has the time key, false otherwise.</returns>
+        bool GetTimeKeyDescription(long id, out string description);
 
         /// <summary>
         /// Create an object for playing back the operation.

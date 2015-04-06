@@ -8,30 +8,16 @@ namespace kerbcam2 {
     /// Implements an operation for the purposes of GUI experimentation.
     /// </summary>
     class DummyOperation : IOperation {
-        public List<TimeKey> items;
+        public Dictionary<long, string> items;
+        private Timeline timeline;
 
-        public DummyOperation() {
-            items = new List<TimeKey>();
+        public DummyOperation(Timeline timeline) {
+            items = new Dictionary<long, string>();
+            this.timeline = timeline;
         }
 
-        public TimeKey GetBeginTime() {
-            throw new NotImplementedException();
-        }
-
-        public TimeKey GetEndTime() {
-            throw new NotImplementedException();
-        }
-
-        public Timeline GetTimeline() {
-            throw new NotImplementedException();
-        }
-
-        public EnumerableWrapper<TimeKey> EnumerateTimes() {
-            return new EnumerableWrapper<TimeKey>(items);
-        }
-
-        public bool HasTime(TimeKey time) {
-            return items.Contains(time);
+        public bool GetTimeKeyDescription(long id, out string description) {
+            return items.TryGetValue(id, out description);
         }
 
         public IPlaybackState MakePlayback(Actuators actuators) {
