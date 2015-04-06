@@ -16,6 +16,7 @@ namespace kerbcam2 {
             if (repaint) {
                 headers.Clear();
             }
+            // Render the table.
             using (GU.Vertical()) {
                 // Column headers.
                 using (GU.Horizontal()) {
@@ -37,7 +38,7 @@ namespace kerbcam2 {
                             float width;
                             headers.TryGetValue(time.id, out width);
                             string description;
-                            if (op.GetTimeKeyDescription(time.id, out description)) {
+                            if (op.GetNameForTimeKey(time.id, out description)) {
                                 GUILayout.Button(description, Styles.marginlessButton, GUILayout.Width(width));
                             } else {
                                 GUILayout.Space(width);

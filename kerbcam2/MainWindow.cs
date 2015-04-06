@@ -54,11 +54,11 @@ namespace kerbcam2 {
             long tk4 = story.Timeline.NewTimeKey(new TimeKey("", 12.73f)).id;
             long tk5 = story.Timeline.NewTimeKey(new TimeKey("", 20.28f)).id;
 
-            var dummyOp = new DummyOperation(story.Timeline);
+            var dummyOp = new DummyOperation(story.Timeline, "test");
             story.AddOperation(dummyOp);
-            dummyOp.items.Add(tk0, "p0");
-            dummyOp.items.Add(tk1, "p1");
-            dummyOp.items.Add(tk3, "p3");
+            dummyOp.Items.Add(tk0, "p0");
+            dummyOp.Items.Add(tk1, "p1");
+            dummyOp.Items.Add(tk3, "p3");
         }
 
         internal override void DrawWindow(int id) {

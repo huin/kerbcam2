@@ -9,12 +9,17 @@ namespace kerbcam2 {
     /// </summary>
     interface IOperation {
         /// <summary>
+        /// Human-readable name for the operation.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Return description for the time key ID, if it exists.
         /// </summary>
         /// <param name="id">The timekey ID.</param>
-        /// <param name="description">Returns the description.</param>
+        /// <param name="name">Returns the description.</param>
         /// <returns>true if the operation has the time key, false otherwise.</returns>
-        bool GetTimeKeyDescription(long id, out string description);
+        bool GetNameForTimeKey(long id, out string name);
 
         /// <summary>
         /// Create an object for playing back the operation.
