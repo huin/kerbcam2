@@ -36,8 +36,8 @@ namespace kerbcam2 {
                     Timeline timeline = story.Timeline;
                     // Column headers from timeline.
                     using (GU.Horizontal()) {
-                        GUILayout.Label("Operation", Styles.marginlessLabel, headerHeight, firstColWidth);
-                        if (GUILayout.Button("+", Styles.marginlessButton, headerHeight, addWidth)) {
+                        GUILayout.Label("Operation", Styles.tableLabel, headerHeight, firstColWidth);
+                        if (GUILayout.Button("+", Styles.tableButton, headerHeight, addWidth)) {
                             story.Timeline.ShiftAll(1);
                             story.Timeline.NewTimeKey(new TimeKey("", 0));
                         }
@@ -45,10 +45,10 @@ namespace kerbcam2 {
                             TimeKey key = timeline[i];
                             string timekeyLabel = string.Format("{0}\n{1}",
                                     key.GetTimeFormatted(), key.name);
-                            if (GUILayout.Button(timekeyLabel, Styles.marginlessButton, headerHeight, timeWidth)) {
+                            if (GUILayout.Button(timekeyLabel, Styles.tableButton, headerHeight, timeWidth)) {
                                 itemEditor = timeline.GetEditorForTimeKey(key.id);
                             }
-                            if (GUILayout.Button("+", Styles.marginlessButton, headerHeight, addWidth)) {
+                            if (GUILayout.Button("+", Styles.tableButton, headerHeight, addWidth)) {
                                 TimeKey newTime;
                                 try {
                                     TimeKey nextTime = timeline[i + 1];
@@ -63,7 +63,7 @@ namespace kerbcam2 {
                     // Operation rows.
                     foreach (IOperation op in story.EnumerateOperations()) {
                         using (GU.Horizontal()) {
-                            if (GUILayout.Button(op.Name, Styles.marginlessButton, firstColWidth)) {
+                            if (GUILayout.Button(op.Name, Styles.tableButton, firstColWidth)) {
                                 itemEditor = op.MakeEditor();
                             }
                             GUILayout.Space(ADD_WIDTH);
@@ -71,7 +71,7 @@ namespace kerbcam2 {
                                 TimeKey time = timeline[i];
                                 IOperationKey opKey;
                                 if (op.TryGetKey(time.id, out opKey)) {
-                                    if (GUILayout.Button(opKey.Name, Styles.marginlessButton, timeWidth)) {
+                                    if (GUILayout.Button(opKey.Name, Styles.tableButton, timeWidth)) {
                                         itemEditor = opKey.MakeEditor();
                                     }
                                     GUILayout.Space(ADD_WIDTH);
@@ -81,11 +81,9 @@ namespace kerbcam2 {
                             }
                         }
                     }
-                    using (GU.Horizontal()) {
-                        // Add operation.
-                        GUILayout.Button("+", firstColWidth);
-                        // TODO: Create new operation.
-                    }
+                    // Add operation.
+                    GUILayout.Button("+", Styles.tableButton, firstColWidth);
+                    // TODO: Create new operation.
                 }
             }
         }

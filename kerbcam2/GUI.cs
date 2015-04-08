@@ -157,8 +157,8 @@ namespace kerbcam2 {
 
         private const int winButtonSize = 25;
         public static GUIStyle windowButton;
-        public static GUIStyle marginlessButton;
-        public static GUIStyle marginlessLabel;
+        public static GUIStyle tableButton;
+        public static GUIStyle tableLabel;
         public static GUIStyle invalidTextField;
         public static GUIStyle invalidValueLabel;
 
@@ -182,11 +182,17 @@ namespace kerbcam2 {
             windowButton.hover.background = litTxt;
             windowButton.normal.background = normalTxt;
 
-            marginlessButton = new GUIStyle(skin.button);
-            marginlessButton.margin = new RectOffset(0, 0, 0, 0);
+            tableButton = new GUIStyle(skin.button);
+            tableButton.margin = new RectOffset(0, 0, 0, 0);
+            tableButton.clipping = TextClipping.Clip;
+            tableButton.alignment = TextAnchor.MiddleLeft;
+            tableButton.fontSize = 12;
 
-            marginlessLabel = new GUIStyle(skin.label);
-            marginlessLabel.margin = new RectOffset(0, 0, 0, 0);
+            tableLabel = new GUIStyle(skin.label);
+            tableLabel.margin = new RectOffset(0, 0, 0, 0);
+            tableLabel.clipping = TextClipping.Clip;
+            tableLabel.alignment = TextAnchor.UpperLeft;
+            tableLabel.fontSize = 12;
 
             invalidTextField = new GUIStyle(skin.textField);
             invalidTextField.active.textColor = Color.red;
