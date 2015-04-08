@@ -22,6 +22,13 @@ namespace kerbcam2 {
         bool TryGetKey(long tid, out IOperationKey key);
 
         /// <summary>
+        /// Add a timekey entry.
+        /// </summary>
+        /// <param name="tid">The timekey ID.</param>
+        /// <exception cref="TimeConflictException">Time key ID already present.</exception>
+        void AddKey(long tid);
+
+        /// <summary>
         /// Create an object for playing back the operation.
         /// </summary>
         /// <param name="actuators">The actuators to use during

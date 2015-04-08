@@ -22,7 +22,17 @@ namespace kerbcam2 {
             set { name = value; }
         }
 
+        public void AddKey(long tid) {
+            if (items.ContainsKey(tid)) {
+                throw new TimeConflictException();
+            }
+            items[tid] = new DummyOperationKey("");
+        }
+
         public void AddKey(long tid, string name) {
+            if (items.ContainsKey(tid)) {
+                throw new TimeConflictException();
+            }
             items[tid] = new DummyOperationKey(name);
         }
 

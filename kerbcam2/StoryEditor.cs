@@ -76,14 +76,18 @@ namespace kerbcam2 {
                                     }
                                     GUILayout.Space(ADD_WIDTH);
                                 } else {
-                                    GUILayout.Space(TIME_WIDTH + ADD_WIDTH);
+                                    if (GUILayout.Button("+", Styles.tableLabel, timeWidth)) {
+                                        op.AddKey(time.id);
+                                    }
+                                    GUILayout.Space(ADD_WIDTH);
                                 }
                             }
                         }
                     }
                     // Add operation.
-                    GUILayout.Button("+", Styles.tableButton, firstColWidth);
-                    // TODO: Create new operation.
+                    if (GUILayout.Button("+", Styles.tableButton, firstColWidth)) {
+                        story.AddOperation(new DummyOperation(story.Timeline, "new dummy op"));
+                    }
                 }
             }
         }
