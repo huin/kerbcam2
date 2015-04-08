@@ -148,12 +148,12 @@ namespace kerbcam2 {
         private class TimeKeyEditor : IItemEditor {
             private Timeline timeline;
             private TimeKey key;
-            private NumericField<float> secondsField;
+            private CheckedField<float> secondsField;
 
             public TimeKeyEditor(Timeline timeline, TimeKey key) {
                 this.timeline = timeline;
                 this.key = key;
-                secondsField = new NumericField<float>(key.seconds,
+                secondsField = new CheckedField<float>(key.seconds,
                     delegate(string s, out float v) {
                         if (float.TryParse(s, out v)) {
                             if (v < 0) {

@@ -2,14 +2,14 @@
 using UnityEngine;
 
 namespace kerbcam2 {
-    class NumericField<T> where T : IEquatable<T> {
+    class CheckedField<T> where T : IEquatable<T> {
         public delegate bool TryParser(string s, out T v);
 
         private T lastValue;
         private string strValue;
         private TryParser parser;
 
-        public NumericField(T initialValue, TryParser parser) {
+        public CheckedField(T initialValue, TryParser parser) {
             this.lastValue = initialValue;
             this.strValue = initialValue.ToString();
             this.parser = parser;
