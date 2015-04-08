@@ -49,7 +49,7 @@
     <Compile Include="DummyOperation.cs" />
     <Compile Include="EnumerableWrapper.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="NumericField.cs" />
+    <Compile Include="CheckedField.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="IItemEditor.cs" />
     <Compile Include="IOperation.cs" />
