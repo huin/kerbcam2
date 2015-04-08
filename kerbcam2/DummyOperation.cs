@@ -49,7 +49,10 @@ namespace kerbcam2 {
             }
 
             public bool DrawUI() {
-                // TODO
+                using (GU.Horizontal()) {
+                    GUILayout.Label("Name: ");
+                    op.Name = GUILayout.TextField(op.Name);
+                }
                 return false;
             }
         }
