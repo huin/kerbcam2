@@ -81,6 +81,11 @@ namespace kerbcam2 {
                             }
                         }
                     }
+                    using (GU.Horizontal()) {
+                        // Add operation.
+                        GUILayout.Button("+", firstColWidth);
+                        // TODO: Create new operation.
+                    }
                 }
             }
         }
