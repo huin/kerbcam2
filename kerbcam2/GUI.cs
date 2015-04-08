@@ -185,7 +185,7 @@ namespace kerbcam2 {
             tableButton = new GUIStyle(skin.button);
             tableButton.margin = new RectOffset(0, 0, 0, 0);
             tableButton.clipping = TextClipping.Clip;
-            tableButton.alignment = TextAnchor.MiddleLeft;
+            tableButton.alignment = TextAnchor.UpperLeft;
             tableButton.fontSize = 12;
 
             tableLabel = new GUIStyle(skin.label);
