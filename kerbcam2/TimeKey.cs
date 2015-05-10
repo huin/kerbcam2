@@ -40,11 +40,10 @@ namespace kerbcam2 {
         /// </summary>
         public float Seconds {
             get { return seconds; }
-        }
-
-        public void SetSeconds(float seconds) {
-            this.seconds = seconds;
-            timeline.ResortKeyOrder();
+            set {
+                this.seconds = value;
+                timeline.ResortKeyOrder();
+            }
         }
 
         internal void RawSetSeconds(float seconds) {
