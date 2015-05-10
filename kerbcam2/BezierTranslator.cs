@@ -6,7 +6,7 @@ namespace kerbcam2 {
     class BezierTranslator : IOperation {
         private string name;
         private readonly Timeline timeline;
-        private readonly Dictionary<long, Key> keys = new Dictionary<long, Key>();
+        private readonly Dictionary<TimeKey, Key> keys = new Dictionary<TimeKey, Key>();
 
         public BezierTranslator(Timeline timeline, string name) {
             this.timeline = timeline;
@@ -18,18 +18,18 @@ namespace kerbcam2 {
             set { name = value; }
         }
 
-        public bool TryGetKey(long tid, out IOperationKey key) {
+        public bool TryGetKey(TimeKey timeKey, out IOperationKey key) {
             Key skey;
-            bool found = keys.TryGetValue(tid, out skey);
+            bool found = keys.TryGetValue(timeKey, out skey);
             key = skey;
             return found;
         }
 
-        public IOperationKey AddKey(long tid) {
-            if (keys.ContainsKey(tid)) {
+        public IOperationKey AddKey(TimeKey timeKey) {
+            if (keys.ContainsKey(timeKey)) {
                 throw new TimeConflictException();
             }
-            return keys[tid] = new Key();
+            return keys[timeKey] = new Key();
         }
 
         public IPlaybackState MakePlayback(Actuators actuators) {

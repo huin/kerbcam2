@@ -37,24 +37,24 @@ namespace kerbcam2 {
                         GUILayout.Label("Operation", Styles.tableLabel, headerHeight, firstColWidth);
                         if (GUILayout.Button("+", Styles.emptyTableButton, headerHeight, addWidth)) {
                             story.Timeline.ShiftAll(1);
-                            story.Timeline.NewTimeKey(new TimeKey("", 0));
+                            itemEditor = story.Timeline.NewTimeKey("", 0).MakeEditor();
                         }
                         for (int i = 0; i < timeline.Count; i++) {
                             TimeKey key = timeline[i];
                             string timekeyLabel = string.Format("{0}\n{1}",
-                                    key.GetTimeFormatted(), key.name);
+                                    key.GetTimeFormatted(), key.Name);
                             if (GUILayout.Button(timekeyLabel, CellStyle(key), headerHeight, timeWidth)) {
-                                itemEditor = timeline.GetEditorForTimeKey(key.id);
+                                itemEditor = key.MakeEditor();
                             }
                             if (GUILayout.Button("+", Styles.emptyTableButton, headerHeight, addWidth)) {
                                 TimeKey newTime;
                                 try {
                                     TimeKey nextTime = timeline[i + 1];
-                                    newTime = new TimeKey("", (key.seconds + nextTime.seconds) / 2);
+                                    newTime = story.Timeline.NewTimeKey("", (key.Seconds + nextTime.Seconds) / 2);
                                 } catch (ArgumentOutOfRangeException) {
-                                    newTime = new TimeKey("", key.seconds + 1);
+                                    newTime = story.Timeline.NewTimeKey("", key.Seconds + 1);
                                 }
-                                story.Timeline.NewTimeKey(newTime);
+                                itemEditor = newTime.MakeEditor();
                             }
                         }
                     }
@@ -66,15 +66,15 @@ namespace kerbcam2 {
                             }
                             GUILayout.Label("", Styles.emptyTableLabel, addWidth);
                             for (int i = 0; i < timeline.Count; i++) {
-                                TimeKey time = timeline[i];
+                                TimeKey timeKey = timeline[i];
                                 IOperationKey opKey;
-                                if (op.TryGetKey(time.id, out opKey)) {
+                                if (op.TryGetKey(timeKey, out opKey)) {
                                     if (GUILayout.Button(opKey.Name, CellStyle(opKey), timeWidth)) {
                                         itemEditor = opKey.MakeEditor();
                                     }
                                 } else {
                                     if (GUILayout.Button("+", Styles.emptyTableButton, timeWidth)) {
-                                        itemEditor = op.AddKey(time.id).MakeEditor();
+                                        itemEditor = op.AddKey(timeKey).MakeEditor();
                                     }
                                 }
                                 GUILayout.Label("", Styles.emptyTableLabel, addWidth);

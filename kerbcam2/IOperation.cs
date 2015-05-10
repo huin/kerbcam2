@@ -14,20 +14,20 @@ namespace kerbcam2 {
         string Name { get; set; }
 
         /// <summary>
-        /// Return the operation key for the given timekey ID.
+        /// Return the operation key for the given TimeKey.
         /// </summary>
-        /// <param name="tid">The timekey ID.</param>
+        /// <param name="timeKey">The TimeKey.</param>
         /// <param name="name">Returns the operation key.</param>
         /// <returns>true if the operation has the time key, false otherwise.</returns>
-        bool TryGetKey(long tid, out IOperationKey key);
+        bool TryGetKey(TimeKey timeKey, out IOperationKey key);
 
         /// <summary>
         /// Add a timekey entry.
         /// </summary>
-        /// <param name="tid">The timekey ID.</param>
-        /// <exception cref="TimeConflictException">Time key ID already present.</exception>
+        /// <param name="key">The TimeKey.</param>
+        /// <exception cref="TimeConflictException">TimeKey already present.</exception>
         /// <returns>The created key.</returns>
-        IOperationKey AddKey(long tid);
+        IOperationKey AddKey(TimeKey timeKey);
 
         /// <summary>
         /// Create an object for playing back the operation.

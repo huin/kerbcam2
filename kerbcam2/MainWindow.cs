@@ -47,12 +47,12 @@ namespace kerbcam2 {
             story = new Story();
             storyEditor = new StoryEditor(story);
             // TODO: Remove these time keys, at least from MainWindow.
-            long tk0 = story.Timeline.NewTimeKey(new TimeKey("Start", 0f)).id;
-            long tk1 = story.Timeline.NewTimeKey(new TimeKey("", 3.15f)).id;
-            long tk2 = story.Timeline.NewTimeKey(new TimeKey("", 7.5f)).id;
-            long tk3 = story.Timeline.NewTimeKey(new TimeKey("Engines start", 10.23f)).id;
-            long tk4 = story.Timeline.NewTimeKey(new TimeKey("", 12.73f)).id;
-            long tk5 = story.Timeline.NewTimeKey(new TimeKey("", 20.28f)).id;
+            TimeKey tk0 = story.Timeline.NewTimeKey("Start", 0f);
+            TimeKey tk1 = story.Timeline.NewTimeKey("", 3.15f);
+            TimeKey tk2 = story.Timeline.NewTimeKey("", 7.5f);
+            TimeKey tk3 = story.Timeline.NewTimeKey("Engines start", 10.23f);
+            TimeKey tk4 = story.Timeline.NewTimeKey("", 12.73f);
+            TimeKey tk5 = story.Timeline.NewTimeKey("", 20.28f);
 
             var dummyOp = new DummyOperation(story.Timeline, "test");
             story.AddOperation(dummyOp);

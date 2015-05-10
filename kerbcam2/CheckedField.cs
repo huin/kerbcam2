@@ -15,7 +15,7 @@ namespace kerbcam2 {
             this.parser = parser;
         }
 
-        public void DrawUI(ref T curValue) {
+        public bool DrawUI(ref T curValue) {
             if (!curValue.Equals(lastValue)) {
                 lastValue = curValue;
                 strValue = curValue.ToString();
@@ -47,8 +47,10 @@ namespace kerbcam2 {
                 if (parser(newStrValue, out newValue)) {
                     lastValue = newValue;
                     curValue = newValue;
+                    return true;
                 }
             }
+            return false;
         }
     }
 

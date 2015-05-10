@@ -7,12 +7,11 @@ namespace kerbcam2 {
     /// Implements an operation for the purposes of GUI experimentation.
     /// </summary>
     class DummyOperation : IOperation {
-        private Dictionary<long, DummyOperationKey> items;
+        private Dictionary<TimeKey, DummyOperationKey> items = new Dictionary<TimeKey, DummyOperationKey>();
         private string name;
         private Timeline timeline;
 
         public DummyOperation(Timeline timeline, string name) {
-            items = new Dictionary<long, DummyOperationKey>();
             this.timeline = timeline;
             this.name = name;
         }
@@ -22,16 +21,16 @@ namespace kerbcam2 {
             set { name = value; }
         }
 
-        public IOperationKey AddKey(long tid) {
-            if (items.ContainsKey(tid)) {
+        public IOperationKey AddKey(TimeKey timeKey) {
+            if (items.ContainsKey(timeKey)) {
                 throw new TimeConflictException();
             }
-            return items[tid] = new DummyOperationKey("");
+            return items[timeKey] = new DummyOperationKey("");
         }
 
-        public bool TryGetKey(long id, out IOperationKey key) {
+        public bool TryGetKey(TimeKey timeKey, out IOperationKey key) {
             DummyOperationKey dkey;
-            bool found = items.TryGetValue(id, out dkey);
+            bool found = items.TryGetValue(timeKey, out dkey);
             key = dkey;
             return found;
         }
@@ -74,9 +73,9 @@ namespace kerbcam2 {
                 get { return name; }
                 set { name = value; }
             }
-            
+
             public IItemEditor MakeEditor() {
- 	            return new DummyOperatiorKeyEditor(this);
+                return new DummyOperatiorKeyEditor(this);
             }
         }
 
