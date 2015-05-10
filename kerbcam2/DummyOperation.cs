@@ -58,6 +58,9 @@ namespace kerbcam2 {
                 }
                 return this;
             }
+            public bool IsEditing(object o) {
+                return object.ReferenceEquals(op, o);
+            }
         }
 
         private class DummyOperationKey : IOperationKey {
@@ -90,6 +93,9 @@ namespace kerbcam2 {
                     key.Name = GUILayout.TextField(key.Name);
                 }
                 return this;
+            }
+            public bool IsEditing(object o) {
+                return object.ReferenceEquals(key, o);
             }
         }
     }

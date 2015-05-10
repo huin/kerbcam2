@@ -171,6 +171,13 @@ namespace kerbcam2 {
                 timeline.UpdateTimeKey(key);
                 return this;
             }
+            public bool IsEditing(object o) {
+                TimeKey? k = o as TimeKey?;
+                if (k.HasValue) {
+                    return k.Value.id == key.id;
+                }
+                return false;
+            }
         }
     }
 }

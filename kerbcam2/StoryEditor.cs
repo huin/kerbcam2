@@ -43,7 +43,7 @@ namespace kerbcam2 {
                             TimeKey key = timeline[i];
                             string timekeyLabel = string.Format("{0}\n{1}",
                                     key.GetTimeFormatted(), key.name);
-                            if (GUILayout.Button(timekeyLabel, Styles.tableButton, headerHeight, timeWidth)) {
+                            if (GUILayout.Button(timekeyLabel, CellStyle(key), headerHeight, timeWidth)) {
                                 itemEditor = timeline.GetEditorForTimeKey(key.id);
                             }
                             if (GUILayout.Button("+", Styles.emptyTableButton, headerHeight, addWidth)) {
@@ -61,7 +61,7 @@ namespace kerbcam2 {
                     // Operation rows.
                     foreach (IOperation op in story.EnumerateOperations()) {
                         using (GU.Horizontal()) {
-                            if (GUILayout.Button(op.Name, Styles.tableButton, firstColWidth)) {
+                            if (GUILayout.Button(op.Name, CellStyle(op), firstColWidth)) {
                                 itemEditor = op.MakeEditor();
                             }
                             GUILayout.Label("", Styles.emptyTableLabel, addWidth);
@@ -69,7 +69,7 @@ namespace kerbcam2 {
                                 TimeKey time = timeline[i];
                                 IOperationKey opKey;
                                 if (op.TryGetKey(time.id, out opKey)) {
-                                    if (GUILayout.Button(opKey.Name, Styles.tableButton, timeWidth)) {
+                                    if (GUILayout.Button(opKey.Name, CellStyle(opKey), timeWidth)) {
                                         itemEditor = opKey.MakeEditor();
                                     }
                                 } else {
@@ -86,6 +86,14 @@ namespace kerbcam2 {
                         itemEditor = new NewOperationEditor(this.story);
                     }
                 }
+            }
+        }
+
+        private GUIStyle CellStyle(object o) {
+            if (itemEditor != null && itemEditor.IsEditing(o)) {
+                return Styles.selTableButton;
+            } else {
+                return Styles.tableButton;
             }
         }
 
@@ -114,6 +122,9 @@ namespace kerbcam2 {
                     return op.MakeEditor();
                 }
                 return this;
+            }
+            public bool IsEditing(object o) {
+                return false;
             }
         }
     }

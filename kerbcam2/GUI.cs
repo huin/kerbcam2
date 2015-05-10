@@ -170,6 +170,7 @@ namespace kerbcam2 {
         public static GUIStyle creativeButton;
         public static GUIStyle destructiveButton;
         public static GUIStyle tableButton;
+        public static GUIStyle selTableButton;
         public static GUIStyle emptyTableButton;
         public static GUIStyle tableLabel;
         public static GUIStyle emptyTableLabel;
@@ -179,7 +180,8 @@ namespace kerbcam2 {
         private static void updateStyles() {
             var lightTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.3f));
             var normalTxt = MakeConstantTexture(new Color(0.7f, 0.7f, 0.7f, 0.3f));
-            var clearTxt = MakeConstantTexture(Color.clear);
+            var lightYellowTxt = MakeConstantTexture(new Color(1f, 1f, 0.4f, 0.3f));
+            var yellowTxt = MakeConstantTexture(new Color(1f, 1f, 0f, 0.3f));
             var darkTxt = MakeConstantTexture(new Color(0f, 0f, 0f, 0.3f));
 
             GUISkin skin = SkinsLibrary.CurrentSkin;
@@ -205,6 +207,9 @@ namespace kerbcam2 {
             tableButton.alignment = TextAnchor.UpperLeft;
             tableButton.fontSize = 12;
             SetBackgrounds(tableButton, lightTxt, lightTxt, lightTxt, normalTxt);
+
+            selTableButton = new GUIStyle(tableButton);
+            SetBackgrounds(selTableButton, lightYellowTxt, lightYellowTxt, lightYellowTxt, yellowTxt);
 
             emptyTableButton = new GUIStyle(tableButton);
             SetBackgrounds(emptyTableButton, lightTxt, lightTxt, lightTxt, darkTxt);

@@ -53,6 +53,9 @@ namespace kerbcam2 {
                 }
                 return this;
             }
+            public bool IsEditing(object o) {
+                return object.ReferenceEquals(op, o);
+            }
         }
 
         private class Key : IOperationKey {
@@ -100,6 +103,9 @@ namespace kerbcam2 {
                     }
                 }
                 return this;
+            }
+            public bool IsEditing(object o) {
+                return object.ReferenceEquals(key, o);
             }
         }
     }
