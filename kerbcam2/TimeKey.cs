@@ -35,6 +35,9 @@ namespace kerbcam2 {
             set { name = value; }
         }
 
+        /// <summary>
+        /// Seconds since start of timeline playback.
+        /// </summary>
         public float Seconds {
             get { return seconds; }
         }
@@ -47,10 +50,6 @@ namespace kerbcam2 {
         internal void RawSetSeconds(float seconds) {
             this.seconds = seconds;
         }
-
-        /// <summary>
-        /// Seconds since start of timeline playback.
-        /// </summary>
 
         public string GetTimeFormatted() {
             return string.Format("{0:0.00}\"", seconds);
