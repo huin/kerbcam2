@@ -11,7 +11,7 @@ namespace kerbcam2 {
         /// <summary>
         /// Human-readable name for the operation.
         /// </summary>
-        string Name { get; }
+        string Name { get; set; }
 
         /// <summary>
         /// Return the operation key for the given timekey ID.
@@ -26,7 +26,8 @@ namespace kerbcam2 {
         /// </summary>
         /// <param name="tid">The timekey ID.</param>
         /// <exception cref="TimeConflictException">Time key ID already present.</exception>
-        void AddKey(long tid);
+        /// <returns>The created key.</returns>
+        IOperationKey AddKey(long tid);
 
         /// <summary>
         /// Create an object for playing back the operation.
@@ -43,7 +44,7 @@ namespace kerbcam2 {
     interface IOperationKey {
         IItemEditor MakeEditor();
 
-        string Name { get; }
+        string Name { get; set; }
     }
 
     /// <summary>

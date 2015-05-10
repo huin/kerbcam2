@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace kerbcam2 {
     class StoryEditor {
-        private Story story;
+        private readonly Story story;
         private Vector2 timeTableScrollPos;
         private IItemEditor itemEditor = null;
-        private static float HEADER_HEIGHT = 40;
-        private static float TIME_WIDTH = 60;
-        private static float FIRSTCOL_WIDTH = 70;
-        private static float ADD_WIDTH = 20;
+        private const float HEADER_HEIGHT = 40;
+        private const float TIME_WIDTH = 60;
+        private const float FIRSTCOL_WIDTH = 70;
+        private const float ADD_WIDTH = 30;
 
         public StoryEditor(Story story) {
             this.story = story;
@@ -19,9 +19,7 @@ namespace kerbcam2 {
             using (GU.Vertical()) {
                 DrawTimeTable();
                 if (itemEditor != null) {
-                    if (itemEditor.DrawUI()) {
-                        itemEditor = null;
-                    }
+                    itemEditor = itemEditor.DrawUI();
                 }
             }
         }
@@ -37,7 +35,7 @@ namespace kerbcam2 {
                     // Column headers from timeline.
                     using (GU.Horizontal()) {
                         GUILayout.Label("Operation", Styles.tableLabel, headerHeight, firstColWidth);
-                        if (GUILayout.Button("+", Styles.tableButton, headerHeight, addWidth)) {
+                        if (GUILayout.Button("+", Styles.emptyTableButton, headerHeight, addWidth)) {
                             story.Timeline.ShiftAll(1);
                             story.Timeline.NewTimeKey(new TimeKey("", 0));
                         }
@@ -48,7 +46,7 @@ namespace kerbcam2 {
                             if (GUILayout.Button(timekeyLabel, Styles.tableButton, headerHeight, timeWidth)) {
                                 itemEditor = timeline.GetEditorForTimeKey(key.id);
                             }
-                            if (GUILayout.Button("+", Styles.tableButton, headerHeight, addWidth)) {
+                            if (GUILayout.Button("+", Styles.emptyTableButton, headerHeight, addWidth)) {
                                 TimeKey newTime;
                                 try {
                                     TimeKey nextTime = timeline[i + 1];
@@ -66,7 +64,7 @@ namespace kerbcam2 {
                             if (GUILayout.Button(op.Name, Styles.tableButton, firstColWidth)) {
                                 itemEditor = op.MakeEditor();
                             }
-                            GUILayout.Space(ADD_WIDTH);
+                            GUILayout.Label("", Styles.emptyTableLabel, addWidth);
                             for (int i = 0; i < timeline.Count; i++) {
                                 TimeKey time = timeline[i];
                                 IOperationKey opKey;
@@ -74,21 +72,48 @@ namespace kerbcam2 {
                                     if (GUILayout.Button(opKey.Name, Styles.tableButton, timeWidth)) {
                                         itemEditor = opKey.MakeEditor();
                                     }
-                                    GUILayout.Space(ADD_WIDTH);
                                 } else {
-                                    if (GUILayout.Button("+", Styles.tableLabel, timeWidth)) {
-                                        op.AddKey(time.id);
+                                    if (GUILayout.Button("+", Styles.emptyTableButton, timeWidth)) {
+                                        itemEditor = op.AddKey(time.id).MakeEditor();
                                     }
-                                    GUILayout.Space(ADD_WIDTH);
                                 }
+                                GUILayout.Label("", Styles.emptyTableLabel, addWidth);
                             }
                         }
                     }
                     // Add operation.
-                    if (GUILayout.Button("+", Styles.tableButton, firstColWidth)) {
-                        story.AddOperation(new DummyOperation(story.Timeline, "new dummy op"));
+                    if (GUILayout.Button("+", Styles.emptyTableButton, firstColWidth)) {
+                        itemEditor = new NewOperationEditor(this.story);
                     }
                 }
+            }
+        }
+
+        private class NewOperationEditor : IItemEditor {
+            private Story story;
+
+            public NewOperationEditor(Story story) {
+                this.story = story;
+            }
+            public IItemEditor DrawUI() {
+                IOperation op = null;
+                using (GU.Vertical()) {
+                    GUILayout.Label("Choose operation to create.");
+                    if (GUILayout.Button("Dummy")) {
+                        op = new DummyOperation(story.Timeline, "dummy");
+                    }
+                    if (GUILayout.Button("Bezier translator")) {
+                        op = new BezierTranslator(story.Timeline, "bezier translator");
+                    }
+                    if (GUILayout.Button("(cancel)", Styles.destructiveButton)) {
+                        return null;
+                    }
+                }
+                if (op != null) {
+                    story.AddOperation(op);
+                    return op.MakeEditor();
+                }
+                return this;
             }
         }
     }

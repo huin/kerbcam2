@@ -153,19 +153,10 @@ namespace kerbcam2 {
             public TimeKeyEditor(Timeline timeline, TimeKey key) {
                 this.timeline = timeline;
                 this.key = key;
-                secondsField = new CheckedField<float>(key.seconds,
-                    delegate(string s, out float v) {
-                        if (float.TryParse(s, out v)) {
-                            if (v < 0) {
-                                return false;
-                            }
-                            return true;
-                        }
-                        return false;
-                    });
+                secondsField = new CheckedField<float>(key.seconds, ValueParser.floatParser);
             }
 
-            public bool DrawUI() {
+            public IItemEditor DrawUI() {
                 timeline.GetTimeKey(key.id);
                 using (GU.Vertical()) {
                     using (GU.Horizontal()) {
@@ -174,11 +165,11 @@ namespace kerbcam2 {
                     }
                     using (GU.Horizontal()) {
                         GUILayout.Label("Seconds: ");
-                        key.seconds = secondsField.DrawUI(key.seconds);
+                        secondsField.DrawUI(ref key.seconds);
                     }
                 }
                 timeline.UpdateTimeKey(key);
-                return false;
+                return this;
             }
         }
     }

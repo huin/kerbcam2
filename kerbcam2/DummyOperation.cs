@@ -22,18 +22,11 @@ namespace kerbcam2 {
             set { name = value; }
         }
 
-        public void AddKey(long tid) {
+        public IOperationKey AddKey(long tid) {
             if (items.ContainsKey(tid)) {
                 throw new TimeConflictException();
             }
-            items[tid] = new DummyOperationKey("");
-        }
-
-        public void AddKey(long tid, string name) {
-            if (items.ContainsKey(tid)) {
-                throw new TimeConflictException();
-            }
-            items[tid] = new DummyOperationKey(name);
+            return items[tid] = new DummyOperationKey("");
         }
 
         public bool TryGetKey(long id, out IOperationKey key) {
@@ -58,12 +51,12 @@ namespace kerbcam2 {
                 this.op = op;
             }
 
-            public bool DrawUI() {
+            IItemEditor IItemEditor.DrawUI() {
                 using (GU.Horizontal()) {
                     GUILayout.Label("Name: ");
                     op.Name = GUILayout.TextField(op.Name);
                 }
-                return false;
+                return this;
             }
         }
 
@@ -91,12 +84,12 @@ namespace kerbcam2 {
                 this.key = key;
             }
 
-            public bool DrawUI() {
+            IItemEditor IItemEditor.DrawUI() {
                 using (GU.Horizontal()) {
                     GUILayout.Label("Name: ");
                     key.Name = GUILayout.TextField(key.Name);
                 }
-                return false;
+                return this;
             }
         }
     }

@@ -9,8 +9,9 @@ namespace kerbcam2 {
     /// <summary>
     /// GUI layout helper class.
     /// </summary>
-    /// Provides methods that start a GUI layout section that work as
-    /// disposables to close the section at the end of the `using` scope.
+    /// Those methods that return a GUICloser start a GUI layout section return
+    /// a GUICloser that works as a disposable to close the section at the end
+    /// of a `using` scope.
     static class GU {
         #region Horizontal
         public static GUICloser Horizontal() {
@@ -127,6 +128,15 @@ namespace kerbcam2 {
             return new GUICloser(GUILayout.EndArea);
         }
         #endregion
+
+        #region Composite widget helpers
+        public static string LabelledTextField(string label, string value) {
+            using (GU.Horizontal()) {
+                GUILayout.Label(label);
+                return GUILayout.TextField(value);
+            }
+        }
+        #endregion
     }
 
     /// <summary>
@@ -157,16 +167,20 @@ namespace kerbcam2 {
 
         private const int winButtonSize = 25;
         public static GUIStyle windowButton;
+        public static GUIStyle creativeButton;
+        public static GUIStyle destructiveButton;
         public static GUIStyle tableButton;
+        public static GUIStyle emptyTableButton;
         public static GUIStyle tableLabel;
+        public static GUIStyle emptyTableLabel;
         public static GUIStyle invalidTextField;
         public static GUIStyle invalidValueLabel;
 
         private static void updateStyles() {
-            var activeTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.3f));
-            var litTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.2f));
-            var normalTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.1f));
+            var lightTxt = MakeConstantTexture(new Color(1f, 1f, 1f, 0.3f));
+            var normalTxt = MakeConstantTexture(new Color(0.7f, 0.7f, 0.7f, 0.3f));
             var clearTxt = MakeConstantTexture(Color.clear);
+            var darkTxt = MakeConstantTexture(new Color(0f, 0f, 0f, 0.3f));
 
             GUISkin skin = SkinsLibrary.CurrentSkin;
 
@@ -177,16 +191,25 @@ namespace kerbcam2 {
             windowButton.border = new RectOffset(1, 1, 1, 1);
             windowButton.margin = new RectOffset(2, 2, 8, 2);
             windowButton.padding = new RectOffset(2, 2, 2, 2);
-            windowButton.active.background = activeTxt;
-            windowButton.focused.background = litTxt;
-            windowButton.hover.background = litTxt;
-            windowButton.normal.background = normalTxt;
+            SetBackgrounds(windowButton, lightTxt, lightTxt, lightTxt, normalTxt);
+
+            creativeButton = new GUIStyle(skin.button);
+            SetTextColor(creativeButton, Color.green);
+
+            destructiveButton = new GUIStyle(skin.button);
+            SetTextColor(destructiveButton, Color.red);
 
             tableButton = new GUIStyle(skin.button);
             tableButton.margin = new RectOffset(0, 0, 0, 0);
             tableButton.clipping = TextClipping.Clip;
             tableButton.alignment = TextAnchor.UpperLeft;
             tableButton.fontSize = 12;
+            SetBackgrounds(tableButton, lightTxt, lightTxt, lightTxt, normalTxt);
+
+            emptyTableButton = new GUIStyle(tableButton);
+            SetBackgrounds(emptyTableButton, lightTxt, lightTxt, lightTxt, darkTxt);
+            SetTextColor(emptyTableButton, Color.green);
+            emptyTableButton.alignment = TextAnchor.UpperCenter;
 
             tableLabel = new GUIStyle(skin.label);
             tableLabel.margin = new RectOffset(0, 0, 0, 0);
@@ -194,13 +217,28 @@ namespace kerbcam2 {
             tableLabel.alignment = TextAnchor.UpperLeft;
             tableLabel.fontSize = 12;
 
+            emptyTableLabel = new GUIStyle(emptyTableButton);
+
             invalidTextField = new GUIStyle(skin.textField);
-            invalidTextField.active.textColor = Color.red;
-            invalidTextField.focused.textColor = Color.red;
-            invalidTextField.normal.textColor = Color.red;
+            SetTextColor(invalidTextField, Color.red);
 
             invalidValueLabel = new GUIStyle(skin.label);
-            invalidValueLabel.normal.textColor = Color.red;
+            SetTextColor(invalidValueLabel, Color.red);
+        }
+
+        private static void SetTextColor(GUIStyle style, Color textColor) {
+            style.active.textColor = textColor;
+            style.focused.textColor = textColor;
+            style.hover.textColor = textColor;
+            style.normal.textColor = textColor;
+        }
+
+        private static void SetBackgrounds(GUIStyle style,
+            Texture2D active, Texture2D focused, Texture2D hover, Texture2D normal) {
+            style.active.background = active;
+            style.focused.background = focused;
+            style.hover.background = hover;
+            style.normal.background = normal;
         }
 
         private static Texture2D MakeConstantTexture(Color fill) {

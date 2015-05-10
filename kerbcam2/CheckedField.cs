@@ -7,7 +7,7 @@ namespace kerbcam2 {
 
         private T lastValue;
         private string strValue;
-        private TryParser parser;
+        private readonly TryParser parser;
 
         public CheckedField(T initialValue, TryParser parser) {
             this.lastValue = initialValue;
@@ -15,7 +15,7 @@ namespace kerbcam2 {
             this.parser = parser;
         }
 
-        public T DrawUI(T curValue) {
+        public void DrawUI(ref T curValue) {
             if (!curValue.Equals(lastValue)) {
                 lastValue = curValue;
                 strValue = curValue.ToString();
@@ -46,11 +46,34 @@ namespace kerbcam2 {
                 T newValue;
                 if (parser(newStrValue, out newValue)) {
                     lastValue = newValue;
-                    return newValue;
+                    curValue = newValue;
                 }
             }
+        }
+    }
 
-            return curValue;
+    /// <summary>
+    /// Parser functions suitable for CheckedField.
+    /// </summary>
+    static class ValueParser {
+        public static bool floatParser(string s, out float v) {
+            if (float.TryParse(s, out v)) {
+                if (v < 0) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public static bool doubleParser(string s, out double v) {
+            if (double.TryParse(s, out v)) {
+                if (v < 0) {
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

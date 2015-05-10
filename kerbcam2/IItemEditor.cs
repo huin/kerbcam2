@@ -5,6 +5,6 @@ using System.Text;
 
 namespace kerbcam2 {
     interface IItemEditor {
-        bool DrawUI();
+        IItemEditor DrawUI();
     }
 }

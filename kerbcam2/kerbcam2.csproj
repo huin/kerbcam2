@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actuators.cs" />
+    <Compile Include="BezierTranslator.cs" />
     <Compile Include="Debug_AutoLoadPersistentSaveOnStartup.cs" />
     <Compile Include="DummyOperation.cs" />
     <Compile Include="EnumerableWrapper.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="submodules\KSPPluginFramework\KSPPluginFramework\SkinsLibrary.cs" />
     <Compile Include="TimeKey.cs" />
     <Compile Include="Timeline.cs" />
+    <Compile Include="Vector3dField.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
