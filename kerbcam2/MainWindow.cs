@@ -63,7 +63,16 @@ namespace kerbcam2 {
 
         internal override void DrawWindow(int id) {
             using (GU.Vertical()) {
-                // TODO: GUI components other than story editor.
+                using (GU.Horizontal()) {
+                    GUILayoutOption playbackWidth = GUILayout.Width(30);
+                    if (GUILayout.Button("\u25a0", Styles.playbackButton, playbackWidth)) {
+                        // TODO
+                    }
+                    if (GUILayout.Button("\u25b6", Styles.playbackButton, playbackWidth)) {
+                        // TODO
+                    }
+                }
+
                 if (storyEditor != null) {
                     storyEditor.DrawUI();
                 }

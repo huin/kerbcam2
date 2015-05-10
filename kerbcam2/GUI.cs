@@ -167,6 +167,7 @@ namespace kerbcam2 {
 
         private const int winButtonSize = 25;
         public static GUIStyle windowButton;
+        public static GUIStyle playbackButton;
         public static GUIStyle creativeButton;
         public static GUIStyle destructiveButton;
         public static GUIStyle tableButton;
@@ -194,6 +195,9 @@ namespace kerbcam2 {
             windowButton.margin = new RectOffset(2, 2, 8, 2);
             windowButton.padding = new RectOffset(2, 2, 2, 2);
             SetBackgrounds(windowButton, lightTxt, lightTxt, lightTxt, normalTxt);
+
+            playbackButton = new GUIStyle(skin.button);
+            playbackButton.alignment = TextAnchor.LowerCenter;
 
             creativeButton = new GUIStyle(skin.button);
             SetTextColor(creativeButton, Color.green);
