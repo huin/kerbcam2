@@ -130,9 +130,9 @@ namespace kerbcam2 {
         #endregion
 
         #region Composite widget helpers
-        public static string LabelledTextField(string label, string value) {
+        public static string LabelledTextField(string label, GUILayoutOption labelOption, string value) {
             using (GU.Horizontal()) {
-                GUILayout.Label(label);
+                GUILayout.Label(label, labelOption);
                 return GUILayout.TextField(value);
             }
         }

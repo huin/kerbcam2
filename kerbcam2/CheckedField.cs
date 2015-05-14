@@ -15,7 +15,7 @@ namespace kerbcam2 {
             this.parser = parser;
         }
 
-        public bool DrawUI(ref T curValue) {
+        public bool DrawUI(ref T curValue, params GUILayoutOption[] opts) {
             if (!curValue.Equals(lastValue)) {
                 lastValue = curValue;
                 strValue = curValue.ToString();
@@ -38,7 +38,7 @@ namespace kerbcam2 {
             string newStrValue;
             using (GU.Horizontal()) {
                 GUILayout.Label(label, labelStyle);
-                newStrValue = GUILayout.TextField(strValue, fieldStyle);
+                newStrValue = GUILayout.TextField(strValue, fieldStyle, opts);
             }
 
             if (newStrValue != strValue) {

@@ -87,18 +87,19 @@ namespace kerbcam2 {
             }
             public IItemEditor DrawUI() {
                 using (GU.Vertical()) {
-                    key.Name = GU.LabelledTextField("Name: ", key.Name);
+                    var labelWidth = GUILayout.MaxWidth(70);
+                    key.Name = GU.LabelledTextField("Name: ", labelWidth, key.Name);
 
                     using (GU.Horizontal()) {
-                        GUILayout.Label("Position: ");
+                        GUILayout.Label("Position: ", labelWidth);
                         posField.DrawUI(ref key.position);
                     }
                     using (GU.Horizontal()) {
-                        GUILayout.Label("In: ");
+                        GUILayout.Label("In: ", labelWidth);
                         moveInField.DrawUI(ref key.moveIn);
                     }
                     using (GU.Horizontal()) {
-                        GUILayout.Label("Out: ");
+                        GUILayout.Label("Out: ", labelWidth);
                         moveOutField.DrawUI(ref key.moveOut);
                     }
                 }

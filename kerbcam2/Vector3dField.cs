@@ -18,10 +18,12 @@ namespace kerbcam2 {
         }
 
         public void DrawUI(ref Vector3d curValue) {
+            var w = GUILayout.MaxWidth(60);
             using (GU.Horizontal()) {
-                x.DrawUI(ref curValue.x);
-                y.DrawUI(ref curValue.y);
-                z.DrawUI(ref curValue.z);
+                x.DrawUI(ref curValue.x, w);
+                y.DrawUI(ref curValue.y, w);
+                z.DrawUI(ref curValue.z, w);
+                GUILayout.FlexibleSpace();
             }
         }
     }
