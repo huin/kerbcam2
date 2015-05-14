@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace kerbcam2 {
+﻿namespace kerbcam2 {
     /// <summary>
     /// Handles modification of the world (or camera) during a given time range.
     /// Strictly speaking, the times are inclusive of the start time, and
