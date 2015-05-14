@@ -20,24 +20,8 @@ namespace kerbcam2 {
         /// Iterates over the TimeKeys in order.
         /// </summary>
         /// <returns></returns>
-        public TimeKeyEnumerator GetEnumerator() {
-            return new TimeKeyEnumerator(this);
-        }
-
-        public struct TimeKeyEnumerator : IEnumerator<TimeKey> {
-            private readonly IEnumerator<TimeKey> e;
-            internal TimeKeyEnumerator(Timeline timeline) {
-                e = timeline.keys.GetEnumerator();
-            }
-            object System.Collections.IEnumerator.Current {
-                get { return e.Current; }
-            }
-            public TimeKey Current {
-                get { return e.Current; }
-            }
-            public void Dispose() { new NotImplementedException(); }
-            public bool MoveNext() { return e.MoveNext(); }
-            public void Reset() { e.Reset(); }
+        public IEnumerator<TimeKey> GetEnumerator() {
+            return keys.GetEnumerator();
         }
 
         /// <summary>
