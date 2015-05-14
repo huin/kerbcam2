@@ -10,6 +10,7 @@ namespace kerbcam2 {
         private const float TIME_WIDTH = 60;
         private const float FIRSTCOL_WIDTH = 70;
         private const float ADD_WIDTH = 30;
+        private const string EMPTY_CELL_STR = "\u25C6";
 
         public StoryEditor(Story story) {
             this.story = story;
@@ -69,7 +70,11 @@ namespace kerbcam2 {
                                 TimeKey timeKey = timeline[i];
                                 IOperationKey opKey;
                                 if (op.TryGetKey(timeKey, out opKey)) {
-                                    if (GUILayout.Button(opKey.Name, CellStyle(opKey), timeWidth)) {
+                                    string label = opKey.Name;
+                                    if (label == "") {
+                                        label = EMPTY_CELL_STR;
+                                    }
+                                    if (GUILayout.Button(label, CellStyle(opKey), timeWidth)) {
                                         itemEditor = opKey.MakeEditor();
                                     }
                                 } else {
