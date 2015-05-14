@@ -15,6 +15,16 @@ namespace kerbcam2 {
             get { return keys[index]; }
         }
 
+        public float Duration {
+            get {
+                if (keys.Count > 0) {
+                    return keys[keys.Count - 1].Seconds;
+                } else {
+                    return 0;
+                }
+            }
+        }
+
         /// <summary>
         /// Iterates over the TimeKeys in order.
         /// </summary>

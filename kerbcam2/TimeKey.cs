@@ -15,7 +15,7 @@ namespace kerbcam2 {
             this.name = name;
             this.seconds = seconds;
         }
-
+        
         public int CompareTo(object obj) {
             if (obj == null) {
                 return 1;
