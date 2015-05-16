@@ -49,8 +49,8 @@ namespace kerbcam2 {
             }
         }
 
-        public BuiltMesh Build() {
-            var mesh = new Mesh();
+        public BuiltMesh Build(Mesh mesh) {
+            mesh.Clear(false);
             var copiedVerticesArr = new int[copiedVertices.Count][];
             for (int i = 0; i < copiedVertices.Count; i++) {
                 copiedVerticesArr[i] = copiedVertices[i].ToArray();
@@ -136,7 +136,7 @@ namespace kerbcam2 {
         private Vector2 ffsize;
         private float depth;
 
-        public SquareFrustrum() {
+        public SquareFrustrum(Mesh mesh) {
             // TODO: Use better sizes.
             bfsize = new Vector2(1.33f, 1f);
             ffsize = bfsize * 2f;
@@ -160,7 +160,7 @@ namespace kerbcam2 {
             builder.AddFlatFace(FFTL, BFTL, BFBL, FFBR); // Left face.
             builder.AddFlatFace(FFTR, FFBR, BFBR, BFTR); // Right face.
 
-            builtMesh = builder.Build();
+            builtMesh = builder.Build(mesh);
         }
 
         public Mesh Mesh {

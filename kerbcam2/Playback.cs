@@ -64,8 +64,10 @@ namespace kerbcam2 {
             var forDeletion = new List<GameObject>();
 
             // Psuedo-camera:
-            // TODO: Have a pyramid thing for the camera mesh
-            var camera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            var camera = new GameObject("kerbcam2.FakeCamera");
+            Mesh cameraMesh = camera.AddComponent<MeshFilter>().sharedMesh;
+            SquareFrustrum frustrum = new SquareFrustrum(cameraMesh);
+            camera.AddComponent<MeshRenderer>();
             var actuators = new Actuators(camera.transform);
 
             var states = new List<IPlaybackState>();
