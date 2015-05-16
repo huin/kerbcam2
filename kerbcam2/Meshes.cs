@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace kerbcam2 {
-    private class MeshBuilder {
+    class MeshBuilder {
         // Common vertex positions given by AddVertex. These are indexed by
         // other fields.
         private readonly List<Vector3> commonVertices = new List<Vector3>();
@@ -42,22 +42,95 @@ namespace kerbcam2 {
                 face[i] = VertexCopy(vertices[i]);
             }
             faces.Add(face);
-            for (int v2 = 1; v2 < face.Length-2; v2++) {
+            for (int v2 = 1; v2 < face.Length - 2; v2++) {
                 triangles.Add(face[0]);
                 triangles.Add(face[v2]);
                 triangles.Add(face[v2 + 1]);
             }
         }
 
-        public Mesh Build() {
-            // TODO
-            // TODO: will also need out parameter(s) for anything the caller
-            // needs (copiedVertices).
+        public BuiltMesh Build() {
+            var mesh = new Mesh();
+            var copiedVerticesArr = new int[copiedVertices.Count][];
+            for (int i = 0; i < copiedVertices.Count; i++) {
+                copiedVerticesArr[i] = copiedVertices[i].ToArray();
+            }
+            var facesArr = new int[faces.Count][];
+            for (int i = 0; i < faces.Count; i++) {
+                facesArr[i] = (int[])faces[i].Clone();
+            }
+            mesh.vertices = new Vector3[vertNormIndices.Count];
+            mesh.normals = new Vector3[vertNormIndices.Count];
+            mesh.triangles = triangles.ToArray();
+            var bm = new BuiltMesh(mesh, copiedVerticesArr, facesArr);
+            using (var mm = bm.MutateMesh()) {
+                for (int id = 0; id < commonVertices.Count; id++) {
+                    mm.SetVertex(id, commonVertices[id]);
+                }
+            }
+            return bm;
+        }
+    }
+
+    class BuiltMesh {
+        private readonly Mesh mesh;
+        private readonly int[][] copiedVertices;
+        private readonly int[][] faces;
+
+        public BuiltMesh(Mesh mesh, int[][] copiedVertices, int[][] faces) {
+            this.mesh = mesh;
+            this.copiedVertices = copiedVertices;
+            this.faces = faces;
+        }
+
+        public Mesh Mesh {
+            get { return mesh; }
+        }
+
+        public MeshMutator MutateMesh() {
+            return new MeshMutator(this);
+        }
+
+        public class MeshMutator : IDisposable {
+            private BuiltMesh bm;
+            private Vector3[] vertices;
+
+            public MeshMutator(BuiltMesh bm) {
+                this.bm = bm;
+                this.vertices = bm.mesh.vertices;
+            }
+
+            public void SetVertex(int commonId, Vector3 v) {
+                foreach (int i in bm.copiedVertices[commonId]) {
+                    this.vertices[i] = v;
+                }
+            }
+
+            public void SetVertex(int commonId, float x, float y, float z) {
+                SetVertex(commonId, new Vector3(x, y, z));
+            }
+
+            void IDisposable.Dispose() {
+                Vector3[] normals = bm.mesh.normals;
+                // Recalculate normals.
+                foreach (int[] face in bm.faces) {
+                    Vector3 v1 = vertices[face[0]];
+                    Vector3 v2 = vertices[face[1]];
+                    Vector3 v3 = vertices[face[2]];
+                    Vector3 normal = Vector3.Cross(v3 - v1, v1 - v2).normalized;
+                    foreach (int i in face) {
+                        normals[i] = normal;
+                    }
+                }
+                bm.mesh.vertices = vertices;
+                bm.mesh.normals = normals;
+                bm.mesh.RecalculateBounds();
+            }
         }
     }
 
     class SquareFrustrum {
-        private readonly UnityEngine.Mesh mesh;
+        private readonly BuiltMesh builtMesh;
         // Backface dimensions.
         private Vector2 bfsize;
         private Vector2 ffsize;
@@ -87,11 +160,11 @@ namespace kerbcam2 {
             builder.AddFlatFace(FFTL, BFTL, BFBL, FFBR); // Left face.
             builder.AddFlatFace(FFTR, FFBR, BFBR, BFTR); // Right face.
 
-            mesh = builder.Build();
+            builtMesh = builder.Build();
         }
 
         public Mesh Mesh {
-            get { return mesh; }
+            get { return builtMesh.Mesh; }
         }
     }
 }
