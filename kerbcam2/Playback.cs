@@ -65,6 +65,7 @@ namespace kerbcam2 {
 
             // Psuedo-camera:
             var camera = new GameObject("kerbcam2.FakeCamera");
+            forDeletion.Add(camera);
             Mesh cameraMesh = camera.AddComponent<MeshFilter>().sharedMesh;
             SquareFrustrum frustrum = new SquareFrustrum(cameraMesh);
             camera.AddComponent<MeshRenderer>();

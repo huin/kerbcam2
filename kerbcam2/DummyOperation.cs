@@ -36,7 +36,7 @@ namespace kerbcam2 {
         }
 
         public IPlaybackState MakePlayback(Actuators actuators) {
-            throw new NotImplementedException();
+            return new DummyPlayback();
         }
 
         public IItemEditor MakeEditor() {
@@ -96,6 +96,10 @@ namespace kerbcam2 {
             public bool IsEditing(object o) {
                 return object.ReferenceEquals(key, o);
             }
+        }
+
+        private class DummyPlayback : IPlaybackState {
+            public void UpdateFor(float time) {}
         }
     }
 }

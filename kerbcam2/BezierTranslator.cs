@@ -33,7 +33,7 @@ namespace kerbcam2 {
         }
 
         public IPlaybackState MakePlayback(Actuators actuators) {
-            throw new NotImplementedException();
+            return new BezierTranslatorPlayback(actuators, this);
         }
 
         public IItemEditor MakeEditor() {
@@ -107,6 +107,43 @@ namespace kerbcam2 {
             }
             public bool IsEditing(object o) {
                 return object.ReferenceEquals(key, o);
+            }
+        }
+
+        private class BezierTranslatorPlayback : IPlaybackState {
+            private readonly Actuators actuators;
+            private readonly PlaybackKey[] keys;
+            private int curKey = 0;
+
+            public BezierTranslatorPlayback(Actuators actuators, BezierTranslator op) {
+                this.actuators = actuators;
+                this.keys = new PlaybackKey[op.keys.Count];
+                int i = 0;
+                foreach (TimeKey tk in op.timeline) {
+                    Key key;
+                    if (op.keys.TryGetValue(tk, out key)) {
+                        keys[i++] = new PlaybackKey(tk.Seconds, key.position);
+                    }
+                }
+            }
+
+            public void UpdateFor(float time) {
+                // TODO: Bezier properly. The current is a really basic
+                // stand-in that steps the camera from one key to the next.
+                while ((curKey + 1) < keys.Length && keys[curKey+1].seconds > time) {
+                    curKey++;
+                }
+                actuators.CameraPosition = keys[curKey].position;
+            }
+
+            private struct PlaybackKey {
+                public float seconds;
+                public Vector3 position;
+
+                public PlaybackKey(float seconds, Vector3d position) {
+                    this.seconds = seconds;
+                    this.position = position;
+                }
             }
         }
     }
