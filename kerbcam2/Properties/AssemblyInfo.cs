@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("kerbcam2")]
 [assembly: AssemblyDescription("KSP camera sequencing tool")]
 [assembly: AssemblyProduct("kerbcam2")]
-[assembly: AssemblyCopyright("Copyright © John Beisley <greatred@gmail.com> 2014")]
+[assembly: AssemblyCopyright("Copyright © John Beisley <johnbeisleyuk@gmail.com> 2014")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
